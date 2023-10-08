@@ -1,27 +1,29 @@
 import 'package:get/get.dart';
-import 'package:money_app/pages/home.dart';
-import 'package:money_app/pages/pay.dart';
-import 'package:money_app/pages/top_up.dart';
+import 'package:money_app/modules/top_up/top_up_controller.dart';
+import 'package:money_app/modules/transactions/transactions_controller.dart';
+import 'package:money_app/modules/transactions/transactions_page.dart';
+import 'package:money_app/modules/pay.dart';
+import 'package:money_app/modules/top_up/top_up_page.dart';
 
-const kStandardPageTransitionDuration = Duration(milliseconds: 500);
+class PageRoutes {
+  static const String transactions = '/transactions';
+  static const String topup = '/top-up';
+  static const String pay = '/pay';
+}
 
 getAppPageRoutes() => [
       GetPage(
-        name: '/home',
-        page: () => const HomePage(),
-        transition: Transition.leftToRightWithFade,
-        transitionDuration: kStandardPageTransitionDuration,
+        name: PageRoutes.transactions,
+        page: () => const TransactionsPage(),
+        binding: TransactionsBinding(),
       ),
       GetPage(
-        name: '/top-up',
+        name: PageRoutes.topup,
         page: () => const TopupPage(),
-        transition: Transition.leftToRightWithFade,
-        transitionDuration: kStandardPageTransitionDuration,
+        binding: TopupBinding(),
       ),
       GetPage(
-        name: '/pay',
+        name: PageRoutes.pay,
         page: () => const PayPage(),
-        transition: Transition.leftToRightWithFade,
-        transitionDuration: kStandardPageTransitionDuration,
       ),
     ];

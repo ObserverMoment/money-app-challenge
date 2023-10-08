@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:money_app/state/transactions_controller.dart';
+import 'package:money_app/modules/transactions/transactions_controller.dart';
 
 void main() {
   group('TransactionController', () {

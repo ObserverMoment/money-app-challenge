@@ -36,7 +36,15 @@ List<TopupTransaction> kSeedTopups() {
   ];
 }
 
-/// Observable State ///
+/// Binding to View ///
+class TransactionsBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => TransactionsController());
+  }
+}
+
+/// Observable State Controller ///
 class TransactionsController extends GetxController {
   @override
   void onInit() {

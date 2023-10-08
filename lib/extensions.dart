@@ -46,39 +46,6 @@ extension DoubleExtension on double {
     return ((this * pow(10, decimalPlaces)).round() / pow(10, decimalPlaces))
         .toStringAsFixed(decimalPlaces);
   }
-
-  Widget currencyAmountDisplay(
-      {required BuildContext context,
-      required bool withCurrency,
-      required bool withSign,
-      required double fontSize,
-      required double decimalsFontSize,
-      Color? color}) {
-    final preDecimal = stringMyDouble().split(".")[0];
-    final postDecimal = stringMyDouble().split(".")[1];
-
-    final subTextStyle = TextStyle(
-        fontWeight: FontWeight.normal,
-        fontSize: decimalsFontSize,
-        color: color);
-
-    return RichText(
-        text: TextSpan(
-            style: DefaultTextStyle.of(context).style.copyWith(
-                fontWeight: FontWeight.bold, fontSize: fontSize, color: color),
-            children: [
-          if (withSign) const TextSpan(text: '+'),
-          if (withCurrency)
-            TextSpan(
-                text: '£',
-                style: subTextStyle.copyWith(fontWeight: FontWeight.bold)),
-          TextSpan(
-            text: preDecimal,
-          ),
-          const TextSpan(text: '.'),
-          TextSpan(text: postDecimal, style: subTextStyle),
-        ]));
-  }
 }
 
 extension IterableDoubleExtension on Iterable<double> {
