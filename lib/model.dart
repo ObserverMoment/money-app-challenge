@@ -2,6 +2,11 @@ sealed class Transaction {
   final DateTime createdAt;
   final double amount;
   const Transaction(this.createdAt, this.amount);
+
+  @override
+  String toString() {
+    return '$runtimeType-${createdAt.millisecondsSinceEpoch}-$amount';
+  }
 }
 
 class PaymentTransaction extends Transaction {

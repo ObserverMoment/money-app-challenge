@@ -1,6 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:money_app/animation/custom_animated_list.dart';
 import 'package:money_app/components/currency_display.dart';
 import 'package:money_app/components/custom_app_bar.dart';
 import 'package:money_app/extensions.dart';
@@ -71,6 +73,8 @@ class _BalanceDisplay extends StatelessWidget {
           withSign: false,
           fontSizeLarge: 50,
           fontSizeSmall: 34,
+          color: context.theme.colorScheme.onSecondary,
+          fontWeight: FontWeight.bold,
         ));
   }
 }
@@ -139,8 +143,6 @@ class _PaymentActionButtons extends StatelessWidget {
 class _TransactionsPageList extends GetView<TransactionsController> {
   const _TransactionsPageList();
 
-  get itemBuilder => null;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -174,7 +176,6 @@ class _TransactionsPageList extends GetView<TransactionsController> {
                 itemBuilder: (context, dayIndex) => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /// TODO: Check for empty list if necessary.
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 24.0, vertical: 8),
@@ -195,17 +196,15 @@ class _TransactionsPageList extends GetView<TransactionsController> {
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           decoration:
                               BoxDecoration(color: context.theme.cardColor),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              itemCount: transactionsPageByDay[dayIndex].length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, txnIndex) =>
-                                  _TransactionDisplay(
-                                    transaction: transactionsPageByDay[dayIndex]
-                                        [txnIndex],
-                                  )),
-                        )
+                          child: CustomAnimatedList<Transaction>(
+                            items: transactionsPageByDay[dayIndex],
+                            itemBuilder: (txn) => _TransactionDisplay(
+                              transaction: txn,
+                            ),
+                            itemsAreTheSame: (a, b) =>
+                                a.toString() == b.toString(),
+                          ),
+                        ).animate().fadeIn()
                       ],
                     )),
           );
@@ -237,7 +236,7 @@ class _TransactionDisplay extends StatelessWidget {
   Widget get _buildLabel => Text(
         switch (transaction) {
           PaymentTransaction() => (transaction as PaymentTransaction).recipient,
-          TopupTransaction() => 'Topup'
+          TopupTransaction() => 'Top Up'
         },
         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       );

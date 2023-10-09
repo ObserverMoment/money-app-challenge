@@ -33,7 +33,7 @@ extension DateTimeExtension on DateTime {
           ? 'Yesterday'
           : dayDateMonth;
 
-  String get dayDateMonth => DateFormat('E dd MMM').format(this);
+  String get dayDateMonth => DateFormat('d MMMM').format(this);
 }
 
 extension DoubleExtension on double {

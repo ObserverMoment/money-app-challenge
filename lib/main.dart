@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:money_app/modules/transactions/transactions_controller.dart';
 import 'package:money_app/router.dart';
 
 const kPrimaryAccent = Color(0xffc0028b);
@@ -22,8 +23,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: '$kAppBarTitle (By Iaido)',
-      initialRoute: '/transactions',
+      initialRoute: PageRoutes.transactions,
       getPages: getAppPageRoutes(),
+      initialBinding: TransactionsBinding(),
       theme: ThemeData(
         useMaterial3: true,
         textTheme: mainTextTheme,

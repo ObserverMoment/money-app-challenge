@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
+import 'package:money_app/modules/pay/pay_controller.dart';
 import 'package:money_app/modules/top_up/top_up_controller.dart';
-import 'package:money_app/modules/transactions/transactions_controller.dart';
 import 'package:money_app/modules/transactions/transactions_page.dart';
-import 'package:money_app/modules/pay.dart';
+import 'package:money_app/modules/pay/pay_page.dart';
 import 'package:money_app/modules/top_up/top_up_page.dart';
 
 class PageRoutes {
@@ -15,7 +15,6 @@ getAppPageRoutes() => [
       GetPage(
         name: PageRoutes.transactions,
         page: () => const TransactionsPage(),
-        binding: TransactionsBinding(),
       ),
       GetPage(
         name: PageRoutes.topup,
@@ -25,5 +24,6 @@ getAppPageRoutes() => [
       GetPage(
         name: PageRoutes.pay,
         page: () => const PayPage(),
+        binding: PayBinding(),
       ),
     ];
