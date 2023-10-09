@@ -45,15 +45,6 @@ class _CustomAnimatedListState<T> extends State<CustomAnimatedList<T>>
         CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
 
     _items = [...widget.items];
-
-    _animationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        setState(() {
-          _entering = [];
-          _animationController.reset();
-        });
-      }
-    });
   }
 
   @override
@@ -64,12 +55,23 @@ class _CustomAnimatedListState<T> extends State<CustomAnimatedList<T>>
           .where((i) => _items.none((o) => widget.itemsAreTheSame(i, o)))
           .toList();
       _items = [...widget.items];
-      _animationController.forward();
+      _animationController.forward().then((value) {
+        setState(() {
+          _entering = [];
+          _animationController.reset();
+        });
+      });
     }
   }
 
   bool _isEntering(T item) =>
       _entering.any((i) => widget.itemsAreTheSame(item, i));
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

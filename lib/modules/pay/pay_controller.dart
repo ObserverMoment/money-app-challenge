@@ -68,5 +68,17 @@ class PayController extends GetxController {
   void handleSubmit() {
     transactionsController.addPaymentTransaction(
         recipient: recipient.value, amount: double.parse(amount.value));
+
+    recipient.value = '';
+    amount.value = '0';
+    currentStep.value = PayProcessStep.amount;
+  }
+
+  @override
+  void onClose() {
+    pageController.dispose();
+    receipientInputController.dispose();
+    receipientInputFocusNode.dispose();
+    super.onClose();
   }
 }

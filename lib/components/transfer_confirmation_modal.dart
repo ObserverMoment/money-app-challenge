@@ -67,7 +67,11 @@ class TransferConfirmationDialog extends StatelessWidget {
                   backgroundColor: context.theme.colorScheme.secondary,
                 ),
                 if (onCancel != null)
-                  TextButton(onPressed: onCancel, child: const Text('Cancel'))
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextButton(
+                        onPressed: onCancel, child: const Text('Cancel')),
+                  )
               ],
             )
           ],

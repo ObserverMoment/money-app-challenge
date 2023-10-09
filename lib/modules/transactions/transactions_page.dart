@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:money_app/animation/custom_animated_list.dart';
 import 'package:money_app/components/currency_display.dart';
 import 'package:money_app/components/custom_app_bar.dart';
+import 'package:money_app/constants.dart';
 import 'package:money_app/extensions.dart';
 import 'package:money_app/model.dart';
 import 'package:money_app/modules/transactions/transactions_controller.dart';
@@ -25,10 +26,12 @@ class TransactionsPage extends GetView<TransactionsController> {
           ),
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Stack(
               children: [
                 Container(
+                  alignment: Alignment.center,
                   height: _actionButtonsCardHeight,
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -47,13 +50,23 @@ class TransactionsPage extends GetView<TransactionsController> {
                         1.0
                       ])),
                 ),
-                _PaymentActionButtons(_actionButtonsCardHeight),
+                Center(
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          maxWidth: kMaxDisplayScreenWidth,
+                          maxHeight: _actionButtonsCardHeight),
+                      child: _PaymentActionButtons(_actionButtonsCardHeight)),
+                ),
               ],
             ),
-            const Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: _TransactionsPageList(),
+            Expanded(
+              child: ConstrainedBox(
+                constraints:
+                    const BoxConstraints(maxWidth: kMaxDisplayScreenWidth),
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: _TransactionsPageList(),
+                ),
               ),
             ),
           ],
@@ -67,7 +80,7 @@ class _BalanceDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => CurrencyDisplay(
+    return Obx(() => AnimatedCurrencyDisplay(
           amount: controller.calculateBalance.value,
           withCurrency: true,
           withSign: false,

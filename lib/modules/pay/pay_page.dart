@@ -46,6 +46,7 @@ class PayPage extends GetView<PayController> {
     final textColor = context.theme.colorScheme.onSecondary;
     final textFieldBorder = UnderlineInputBorder(
         borderSide: BorderSide(width: 2, color: textColor));
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: context.theme.colorScheme.secondary,
@@ -84,21 +85,27 @@ class PayPage extends GetView<PayController> {
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: TextField(
-                      cursorColor: context.theme.colorScheme.onSecondary,
-                      controller: controller.receipientInputController,
-                      focusNode: controller.receipientInputFocusNode,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: textColor,
-                      ),
-                      decoration: InputDecoration(
-                        focusedBorder: textFieldBorder,
-                        enabledBorder: textFieldBorder,
-                        border: textFieldBorder,
+                    padding: EdgeInsets.symmetric(
+                        vertical: 32,
+                        horizontal:
+                            screenWidth > 1000 ? screenWidth * 0.25 : 32),
+                    child: SizedBox(
+                      width: 300,
+                      child: TextField(
+                        cursorColor: context.theme.colorScheme.onSecondary,
+                        controller: controller.receipientInputController,
+                        focusNode: controller.receipientInputFocusNode,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: textColor,
+                        ),
+                        decoration: InputDecoration(
+                          focusedBorder: textFieldBorder,
+                          enabledBorder: textFieldBorder,
+                          border: textFieldBorder,
+                        ),
                       ),
                     )),
               ],
@@ -128,7 +135,8 @@ class PayPage extends GetView<PayController> {
                                       .receipientInputFocusNode.requestFocus,
                                   onConfirm: () {
                                     controller.handleSubmit();
-                                    context.pop();
+                                    // Using named navigation to transactions page seems to cause loss of state and that page to re-render fully.
+                                    Get.back();
                                   });
                             },
                           ),

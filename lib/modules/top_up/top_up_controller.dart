@@ -32,5 +32,6 @@ class TopupController extends GetxController {
   void handleSubmit() {
     transactionsController.addTopupTransaction(
         amount: double.parse(amount.value));
+    updateAmount('0');
   }
 }

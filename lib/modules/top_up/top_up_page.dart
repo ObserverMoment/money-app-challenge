@@ -36,12 +36,15 @@ class TopupPage extends GetView<TopupController> {
       backgroundColor: context.theme.colorScheme.secondary,
       appBar: CustomAppBar(
         customActions: [
-          IconButton(
-              onPressed: context.pop,
-              icon: Icon(
-                Icons.cancel,
-                color: context.theme.colorScheme.onSecondary,
-              ))
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+                onPressed: context.pop,
+                icon: Icon(
+                  Icons.cancel,
+                  color: context.theme.colorScheme.onSecondary,
+                )),
+          )
         ],
         extendedChild: Center(
           child: Text(
@@ -75,7 +78,8 @@ class TopupPage extends GetView<TopupController> {
                       amount: double.parse(controller.amount.value),
                       onConfirm: () {
                         controller.handleSubmit();
-                        context.pop();
+                        // Using named navigation to transactions page seems to cause loss of state and that page to re-render fully.
+                        Get.back();
                       }),
                 ),
               ))

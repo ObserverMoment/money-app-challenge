@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 
+/// Displays a calulator style number pad input and current value display.
 class TransferAmountInput extends StatelessWidget {
   final String amount;
   final void Function(String v) updateAmount;
+  final Color? textColor;
   const TransferAmountInput(
-      {super.key, required this.amount, required this.updateAmount});
+      {super.key,
+      required this.amount,
+      required this.updateAmount,
+      this.textColor});
 
   List<String> get _customInputDisplayValues =>
       ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '<'];
@@ -58,6 +63,9 @@ class TransferAmountInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color selectedTextColor =
+        textColor ?? context.theme.colorScheme.onSecondary;
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -67,31 +75,41 @@ class TransferAmountInput extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 48),
             alignment: Alignment.center,
             child: RichText(
-                text: TextSpan(children: [
-              const TextSpan(text: '£', style: TextStyle(fontSize: 24)),
-              TextSpan(
-                  text: amount,
-                  style: const TextStyle(
-                      fontSize: 40, fontWeight: FontWeight.bold)),
-            ]))),
-        GridView.count(
-          padding: const EdgeInsets.all(8),
-          shrinkWrap: true,
-          childAspectRatio: 2,
-          crossAxisCount: 3,
-          children: _customInputDisplayValues
-              .map((v) => InkWell(
-                    onTap: () => _handleInput(v),
-                    child: Center(
-                        child: Text(
-                      v,
-                      style: TextStyle(
-                          color: context.theme.colorScheme.onSecondary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30),
-                    )),
-                  ))
-              .toList(),
+                text: TextSpan(
+                    style: DefaultTextStyle.of(context).style.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        color: selectedTextColor),
+                    children: [
+                  const TextSpan(text: '£', style: TextStyle(fontSize: 24)),
+                  TextSpan(
+                      text: amount,
+                      style: const TextStyle(
+                          fontSize: 40, fontWeight: FontWeight.bold)),
+                ]))),
+        Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 400),
+            child: GridView.count(
+              padding: const EdgeInsets.all(8),
+              shrinkWrap: true,
+              childAspectRatio: 2,
+              crossAxisCount: 3,
+              children: _customInputDisplayValues
+                  .map((v) => InkWell(
+                        onTap: () => _handleInput(v),
+                        child: Center(
+                            child: Text(
+                          v,
+                          style: TextStyle(
+                              color: selectedTextColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30),
+                        )),
+                      ))
+                  .toList(),
+            ),
+          ),
         ),
       ],
     );
