@@ -1,21 +1,29 @@
-import 'package:go_router/go_router.dart';
-import 'package:money_app/screens/home.dart';
-import 'package:money_app/screens/pay.dart';
-import 'package:money_app/screens/top_up.dart';
+import 'package:get/get.dart';
+import 'package:money_app/modules/pay/pay_controller.dart';
+import 'package:money_app/modules/top_up/top_up_controller.dart';
+import 'package:money_app/modules/transactions/transactions_page.dart';
+import 'package:money_app/modules/pay/pay_page.dart';
+import 'package:money_app/modules/top_up/top_up_page.dart';
 
-final globalRouterConfig = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const HomeScreen(),
-    ),
-    GoRoute(
-      path: '/top-up',
-      builder: (context, state) => const TopUpScreen(),
-    ),
-    GoRoute(
-      path: '/pay',
-      builder: (context, state) => const PayScreen(),
-    ),
-  ],
-);
+class PageRoutes {
+  static const String transactions = '/transactions';
+  static const String topup = '/top-up';
+  static const String pay = '/pay';
+}
+
+getAppPageRoutes() => [
+      GetPage(
+        name: PageRoutes.transactions,
+        page: () => const TransactionsPage(),
+      ),
+      GetPage(
+        name: PageRoutes.topup,
+        page: () => const TopupPage(),
+        binding: TopupBinding(),
+      ),
+      GetPage(
+        name: PageRoutes.pay,
+        page: () => const PayPage(),
+        binding: PayBinding(),
+      ),
+    ];
